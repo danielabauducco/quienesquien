@@ -213,7 +213,7 @@ $("check").addEventListener("click", () => {
     return;
   }
   if (Number(person) === secretPerson && Number(transport) === secretTransport) {
-    $("feedback").textContent = `🎉 ¡MISTERIO RESUELTO! Era ${P[secretPerson][0]} y viajó en ${T[secretTransport][0]}.\n¡Ahora cambien los roles!`;
+ $('feedback').textContent='🎉 ¡MISTERIO RESUELTO! Era '+P[sp][0]+' y viajó en '+T[st][0]+'. ¡Ahora cambien los roles!';
     $("status").textContent = "¡LO DESCUBRISTE! Prepará una nueva partida para cambiar los roles.";
   } else {
     const messages = [];
