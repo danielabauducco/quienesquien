@@ -77,15 +77,15 @@ footer{text-align:center;color:#ded5f5;padding:12px;font-size:.75rem}
     <div class="rule"><h3>💬 EJEMPLOS DE PREGUNTAS</h3>¿Trabaja en una escuela? · ¿Es una persona adulta? · ¿Viaja por el aire? · ¿Tiene ruedas? · ¿Puede llevar muchos pasajeros?</div>
     <div class="rule blue"><h3>🔄 ¿CÓMO TERMINA?</h3>El investigador comprueba su respuesta. Si acierta la persona y el transporte, ¡resuelve el misterio! Después intercambian roles y comienzan otra partida.</div>
   </div>
-  <div class="startline"><button id="enterGame" class="primary" type="button">🚀 ¡IR AL JUEGO!</button></div>
+  <div class="startline"><button id="enterGame" class="primary" type="button" onclick="showGame(); return false;">🚀 ¡IR AL JUEGO!</button></div>
 </section>
 
 <section id="gameScreen" class="screen">
   <div class="bar">
     <div id="status" class="status">Primero preparen el misterio en secreto.</div>
-    <button id="start" class="primary" type="button">🎲 Preparar misterio</button>
-    <button id="clear" class="soft" type="button">↻ Limpiar descartes</button>
-    <button id="backRules" class="dark" type="button">📘 Ver reglas</button>
+    <button id="start" class="primary" type="button" onclick="startGame(); return false;">🎲 Preparar misterio</button>
+    <button id="clear" class="soft" type="button" onclick="clearGameMarks(); return false;">↻ Limpiar descartes</button>
+    <button id="backRules" class="dark" type="button" onclick="showRules(); return false;">📘 Ver reglas</button>
   </div>
   <div class="boards">
     <section class="board"><h2>🕵️ ¿QUIÉN ES? · 8 PERSONAS</h2><div class="cards" id="people"></div></section>
@@ -96,9 +96,9 @@ footer{text-align:center;color:#ded5f5;padding:12px;font-size:.75rem}
     <div><label for="gt">¿CÓMO VIAJÓ?</label><select id="gt"><option value="">Elegí un transporte…</option></select></div>
   </div>
   <div class="bar" style="margin-top:10px">
-    <button id="check" class="primary" type="button">🔎 Comprobar respuesta</button>
-    <button id="show" class="soft" type="button">🤫 Ver misterio secreto</button>
-    <button id="new" class="soft" type="button">✨ Nueva partida</button>
+    <button id="check" class="primary" type="button" onclick="checkGuess(); return false;">🔎 Comprobar respuesta</button>
+    <button id="show" class="soft" type="button" onclick="showSecret(); return false;">🤫 Ver misterio secreto</button>
+    <button id="new" class="soft" type="button" onclick="startGame(); return false;">✨ Nueva partida</button>
   </div>
   <div class="feedback" id="feedback" aria-live="polite">Hacé preguntas oralmente. Quien conoce el misterio responde SÍ o NO.</div>
 </section>
@@ -115,13 +115,13 @@ footer{text-align:center;color:#ded5f5;padding:12px;font-size:.75rem}
       <div class="secretitem"><div id="te" class="emoji">🚗</div><b id="tn">TRANSPORTE</b></div>
     </div>
     <p class="note">Memorizá las dos opciones sin decirlas en voz alta.</p>
-    <button id="hide" class="primary" type="button">🙈 Ya lo memoricé</button>
+    <button id="hide" class="primary" type="button" onclick="hideSecret(); return false;">🙈 Ya lo memoricé</button>
   </div>
 </div>
 
 <script>
-"use strict";
-const P = [
+/* Versión compatible y con diagnóstico visible para el juego. */
+var PERSONAS = [
   ["MARTINA","👩‍🏫","MAESTRA"],
   ["BRUNO","👨‍✈️","PILOTO"],
   ["CLARA","👩‍⚕️","MÉDICA"],
@@ -131,98 +131,152 @@ const P = [
   ["ALMA","🧭","AVENTURERA"],
   ["DANTE","👴","ABUELO VIAJERO"]
 ];
-const T = [
+var TRANSPORTES = [
   ["AVIÓN","✈️"],["COLECTIVO","🚌"],["TREN","🚆"],["BARCO","🚢"],
   ["AUTO","🚗"],["BICICLETA","🚲"],["MOTO","🏍️"],["SUBTE","🚇"]
 ];
-let secretPerson = -1;
-let secretTransport = -1;
-let ready = false;
-const $ = id => document.getElementById(id);
+var personaSecreta = -1;
+var transporteSecreto = -1;
+var misterioListo = false;
 
-function makeCard(kind, index, emoji, name, hint) {
-  return `<button class="card" type="button" data-k="${kind}" data-i="${index}" aria-label="Descartar ${name}">
-    <span class="emoji">${emoji}</span><span class="name">${name}</span><span class="hint">${hint}</span>
-  </button>`;
-}
-function draw() {
-  $("people").innerHTML = P.map((person, i) => makeCard("p", i, person[1], person[0], person[2])).join("");
-  $("transports").innerHTML = T.map((transport, i) => makeCard("t", i, transport[1], transport[0], "TRANSPORTE")).join("");
-  $("gp").innerHTML = '<option value="">Elegí una persona…</option>' +
-    P.map((person, i) => `<option value="${i}">${person[0]} — ${person[2]}</option>`).join("");
-  $("gt").innerHTML = '<option value="">Elegí un transporte…</option>' +
-    T.map((transport, i) => `<option value="${i}">${transport[0]}</option>`).join("");
-}
-function clearMarks() {
-  document.querySelectorAll(".card").forEach(card => card.classList.remove("out"));
-}
-function startGame() {
-  secretPerson = Math.floor(Math.random() * P.length);
-  secretTransport = Math.floor(Math.random() * T.length);
-  ready = true;
-  $("pe").textContent = P[secretPerson][1];
-  $("pn").textContent = P[secretPerson][0] + " · " + P[secretPerson][2];
-  $("te").textContent = T[secretTransport][1];
-  $("tn").textContent = T[secretTransport][0];
-  $("private").classList.add("show");
-  clearMarks();
-  $("gp").value = "";
-  $("gt").value = "";
-  $("status").textContent = "Misterio preparado: ¡que empiece la investigación!";
-  $("feedback").textContent = "Memorizá el misterio y después empezá a responder preguntas.";
-}
-function hideSecret() {
-  $("private").classList.remove("show");
+function el(id) { return document.getElementById(id); }
+
+function mostrarError(mensaje) {
+  var feedback = el("feedback");
+  if (feedback) {
+    feedback.textContent = "No se pudo preparar el misterio. " + mensaje + " Probá tocar NUEVA PARTIDA.";
+  }
+  var status = el("status");
+  if (status) status.textContent = "Hubo un problema al preparar el misterio.";
 }
 
-$("enterGame").addEventListener("click", () => {
-  $("rulesScreen").classList.remove("active");
-  $("gameScreen").classList.add("active");
-});
-$("backRules").addEventListener("click", () => {
-  $("gameScreen").classList.remove("active");
-  $("rulesScreen").classList.add("active");
-});
-$("start").addEventListener("click", startGame);
-$("new").addEventListener("click", startGame);
-$("hide").addEventListener("click", hideSecret);
-$("clear").addEventListener("click", () => {
-  clearMarks();
-  $("feedback").textContent = "Descartes limpiados. El misterio sigue siendo el mismo.";
-});
-document.addEventListener("click", event => {
-  const card = event.target.closest("button.card");
-  if (card) card.classList.toggle("out");
-});
-$("show").addEventListener("click", () => {
-  if (!ready) {
-    $("feedback").textContent = "Primero tocá “Preparar misterio”.";
-    return;
+function crearTarjeta(tipo, indice, emoji, nombre, pista) {
+  return '<button class="card" type="button" data-k="' + tipo + '" data-i="' + indice +
+    '" aria-label="Descartar ' + nombre + '" onclick="toggleCard(this); return false;">' +
+    '<span class="emoji">' + emoji + '</span><span class="name">' + nombre +
+    '</span><span class="hint">' + pista + '</span></button>';
+}
+
+function dibujarTableros() {
+  var i, p, t, personasHtml = "", transportesHtml = "", opcionesPersonas =
+    '<option value="">Elegí una persona…</option>', opcionesTransportes =
+    '<option value="">Elegí un transporte…</option>';
+  for (i = 0; i < PERSONAS.length; i++) {
+    p = PERSONAS[i];
+    personasHtml += crearTarjeta("p", i, p[1], p[0], p[2]);
+    opcionesPersonas += '<option value="' + i + '">' + p[0] + ' — ' + p[2] + '</option>';
   }
-  $("private").classList.add("show");
-});
-$("check").addEventListener("click", () => {
-  if (!ready) {
-    $("feedback").textContent = "Primero tocá “Preparar misterio”.";
-    return;
+  for (i = 0; i < TRANSPORTES.length; i++) {
+    t = TRANSPORTES[i];
+    transportesHtml += crearTarjeta("t", i, t[1], t[0], "TRANSPORTE");
+    opcionesTransportes += '<option value="' + i + '">' + t[0] + '</option>';
   }
-  const person = $("gp").value;
-  const transport = $("gt").value;
-  if (person === "" || transport === "") {
-    $("feedback").textContent = "Elegí una persona y un transporte antes de comprobar.";
-    return;
-  }
-  if (Number(person) === secretPerson && Number(transport) === secretTransport) {
-    $("feedback").textContent = `🎉 ¡MISTERIO RESUELTO! Era ${P[secretPerson][0]} y viajó en ${T[secretTransport][0]}.\n¡Ahora cambien los roles!`;
-    $("status").textContent = "¡LO DESCUBRISTE! Prepará una nueva partida para cambiar los roles.";
+  el("people").innerHTML = personasHtml;
+  el("transports").innerHTML = transportesHtml;
+  el("gp").innerHTML = opcionesPersonas;
+  el("gt").innerHTML = opcionesTransportes;
+}
+
+function alternarClase(elemento, clase) {
+  if (!elemento) return;
+  if ((" " + elemento.className + " ").indexOf(" " + clase + " ") >= 0) {
+    elemento.className = (" " + elemento.className + " ").replace(" " + clase + " ", " ").replace(/^\s+|\s+$/g, "");
   } else {
-    const messages = [];
-    if (Number(person) !== secretPerson) messages.push("la persona no es correcta");
-    if (Number(transport) !== secretTransport) messages.push("el transporte no es correcto");
-    $("feedback").textContent = "🔍 Todavía no: " + messages.join(" y ") + ". ¡Seguí preguntando y descartando!";
+    elemento.className = (elemento.className ? elemento.className + " " : "") + clase;
   }
-});
-draw();
+}
+
+function toggleCard(card) { alternarClase(card, "out"); }
+
+function limpiarDescartesInterno() {
+  var cards = document.querySelectorAll(".card");
+  var i;
+  for (i = 0; i < cards.length; i++) {
+    cards[i].className = (" " + cards[i].className + " ").replace(" out ", " ").replace(/^\s+|\s+$/g, "");
+  }
+}
+
+function showGame() {
+  el("rulesScreen").className = "screen intro";
+  el("gameScreen").className = "screen active";
+}
+function showRules() {
+  el("gameScreen").className = "screen";
+  el("rulesScreen").className = "screen active intro";
+}
+function clearGameMarks() {
+  limpiarDescartesInterno();
+  el("feedback").textContent = "Descartes limpiados. El misterio sigue siendo el mismo.";
+}
+
+function startGame() {
+  try {
+    if (!el("private") || !el("pn") || !el("tn") || !el("pe") || !el("te")) {
+      throw new Error("Faltan elementos de la ventana secreta.");
+    }
+    personaSecreta = Math.floor(Math.random() * PERSONAS.length);
+    transporteSecreto = Math.floor(Math.random() * TRANSPORTES.length);
+    misterioListo = true;
+    el("pe").textContent = PERSONAS[personaSecreta][1];
+    el("pn").textContent = PERSONAS[personaSecreta][0] + " · " + PERSONAS[personaSecreta][2];
+    el("te").textContent = TRANSPORTES[transporteSecreto][1];
+    el("tn").textContent = TRANSPORTES[transporteSecreto][0];
+    el("private").style.display = "flex";
+    el("private").className = "private show";
+    limpiarDescartesInterno();
+    el("gp").value = "";
+    el("gt").value = "";
+    el("status").textContent = "Misterio preparado: ¡que empiece la investigación!";
+    el("feedback").textContent = "Memorizá el personaje y el transporte. Cuando termines, tocá YA LO MEMORICÉ.";
+  } catch (error) {
+    mostrarError(error && error.message ? error.message : "Revisá la carga de la página.");
+  }
+}
+
+function hideSecret() {
+  el("private").style.display = "none";
+  el("private").className = "private";
+}
+
+function showSecret() {
+  if (!misterioListo) {
+    el("feedback").textContent = "Primero tocá PREPARAR MISTERIO.";
+    return;
+  }
+  el("private").style.display = "flex";
+  el("private").className = "private show";
+}
+
+function checkGuess() {
+  if (!misterioListo) {
+    el("feedback").textContent = "Primero tocá PREPARAR MISTERIO.";
+    return;
+  }
+  var persona = el("gp").value;
+  var transporte = el("gt").value;
+  if (persona === "" || transporte === "") {
+    el("feedback").textContent = "Elegí una persona y un transporte antes de comprobar.";
+    return;
+  }
+  if (Number(persona) === personaSecreta && Number(transporte) === transporteSecreto) {
+    el("feedback").textContent = "🎉 ¡MISTERIO RESUELTO! Era " + PERSONAS[personaSecreta][0] +
+      " y viajó en " + TRANSPORTES[transporteSecreto][0] + ". ¡Ahora cambien los roles!";
+    el("status").textContent = "¡LO DESCUBRISTE! Prepará una nueva partida para cambiar los roles.";
+  } else {
+    var mensajes = [];
+    if (Number(persona) !== personaSecreta) mensajes.push("la persona no es correcta");
+    if (Number(transporte) !== transporteSecreto) mensajes.push("el transporte no es correcto");
+    el("feedback").textContent = "🔍 Todavía no: " + mensajes.join(" y ") +
+      ". ¡Seguí preguntando y descartando!";
+  }
+}
+
+window.onerror = function(message, source, line) {
+  mostrarError("Error técnico en línea " + line + ": " + message);
+  return false;
+};
+
+dibujarTableros();
 </script>
 </body>
 </html>
