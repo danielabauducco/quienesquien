@@ -1,43 +1,228 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>¿Quién viajó y cómo? — Un viaje sin límites</title>
 <style>
-:root{--v:#7754c8;--d:#24144f;--p:#f6f1ff;--sky:#dff3ff}*{box-sizing:border-box}body{margin:0;padding:12px;background:radial-gradient(circle at top,#44316f,#17132f);font-family:Arial,sans-serif;color:#263044}.app{max-width:1300px;margin:auto}header{text-align:center;color:white;padding:8px}h1{margin:6px;font-size:clamp(1.5rem,3vw,2.5rem)}.kicker{color:#e0d5ff;letter-spacing:2px;font-size:.75rem;font-weight:bold}.panel{background:#fff;border-radius:18px;padding:12px}.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}.status{background:var(--p);padding:10px 12px;border-radius:10px;font-weight:bold;flex:1;min-width:200px}button,select{font:inherit}button{border:0;border-radius:10px;padding:10px 12px;font-weight:bold;cursor:pointer}.primary{background:var(--v);color:white}.soft{background:#e9e2fb;color:#382666}.dark{background:#29344e;color:white}.screen{display:none}.screen.active{display:block}.intro{max-width:900px;margin:auto}.intro h2{text-align:center;color:#573994}.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.rule{background:#f3efff;border-radius:13px;padding:14px;line-height:1.45}.rule.blue{background:#e9f7ff}.rule h3{margin:0 0 7px;color:#573994}.rule.blue h3{color:#216f99}.rule ol{margin:7px 0 0;padding-left:22px}.startline{text-align:center;margin-top:15px}.startline button{font-size:1.05rem;padding:13px 22px}.boards{display:grid;grid-template-columns:1fr 1fr;gap:12px}.board{border:2px solid #d9cdf8;border-radius:14px;padding:10px;min-width:0}.board.t{border-color:#bfe5f7}.board h2{text-align:center;color:#6542a5;margin:3px 0 10px;font-size:1.1rem}.board.t h2{color:#216f99}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.card{background:#fff;border:2px solid #e4deef;border-radius:10px;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:5px;position:relative;color:#263044}.t .card{background:#f4fbff;border-color:#d6ebf5}.emoji{font-size:clamp(1.8rem,3vw,2.7rem)}.name{font-size:clamp(.62rem,1vw,.82rem);font-weight:800;text-align:center}.hint{font-size:.62rem;color:#687080;text-align:center}.card.out{opacity:.45;background:#e6e6eb}.card.out:after{content:"✕";position:absolute;color:#d04454;font-size:3rem;font-weight:bold}.guesses{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.guesses label{font-weight:bold;font-size:.8rem;display:block;margin-bottom:5px}.guesses select{width:100%;padding:10px;border:2px solid #ddd4f5;border-radius:9px}.feedback{background:#f6f4fa;border-radius:10px;padding:12px;margin-top:10px;min-height:42px;font-weight:bold}.private{display:none;position:fixed;inset:0;background:#17102fee;z-index:5;align-items:center;justify-content:center;padding:16px}.private.show{display:flex}.secret{background:white;border-radius:18px;padding:22px;max-width:480px;width:100%;text-align:center}.pair{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.secretitem{background:#f2edff;border-radius:12px;padding:14px;min-width:130px}.secretitem .emoji{font-size:3rem}.note{color:#5d6370;line-height:1.4;font-size:.9rem}footer{text-align:center;color:#ded5f5;padding:12px;font-size:.75rem}@media(max-width:650px){body{padding:6px}.intro-grid,.boards,.guesses{grid-template-columns:1fr}.cards{gap:5px}.card{min-height:78px}}
-</style></head><body><div class="app">
-<header><div class="kicker">UN VIAJE SIN LÍMITES · MISIÓN DE INVESTIGACIÓN</div><h1>🚀 ¿QUIÉN VIAJÓ Y CÓMO? 🧳</h1></header>
+:root{--v:#7754c8;--d:#24144f;--p:#f6f1ff;--sky:#dff3ff}
+*{box-sizing:border-box}
+body{margin:0;padding:12px;background:radial-gradient(circle at top,#44316f,#17132f);font-family:Arial,sans-serif;color:#263044}
+.app{max-width:1300px;margin:auto}
+header{text-align:center;color:white;padding:8px}
+h1{margin:6px;font-size:clamp(1.5rem,3vw,2.5rem)}
+.kicker{color:#e0d5ff;letter-spacing:2px;font-size:.75rem;font-weight:bold}
+.panel{background:#fff;border-radius:18px;padding:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.status{background:var(--p);padding:10px 12px;border-radius:10px;font-weight:bold;flex:1;min-width:200px}
+button,select{font:inherit}
+button{border:0;border-radius:10px;padding:10px 12px;font-weight:bold;cursor:pointer}
+button:focus-visible,select:focus-visible{outline:4px solid #ffca4b;outline-offset:2px}
+.primary{background:var(--v);color:white}
+.soft{background:#e9e2fb;color:#382666}
+.dark{background:#29344e;color:white}
+.screen{display:none}
+.screen.active{display:block}
+.intro{max-width:900px;margin:auto}
+.intro h2{text-align:center;color:#573994}
+.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rule{background:#f3efff;border-radius:13px;padding:14px;line-height:1.45}
+.rule.blue{background:#e9f7ff}
+.rule h3{margin:0 0 7px;color:#573994}
+.rule.blue h3{color:#216f99}
+.rule ol{margin:7px 0 0;padding-left:22px}
+.startline{text-align:center;margin-top:15px}
+.startline button{font-size:1.05rem;padding:13px 22px}
+.boards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.board{border:2px solid #d9cdf8;border-radius:14px;padding:10px;min-width:0}
+.board.t{border-color:#bfe5f7}
+.board h2{text-align:center;color:#6542a5;margin:3px 0 10px;font-size:1.1rem}
+.board.t h2{color:#216f99}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.card{background:#fff;border:2px solid #e4deef;border-radius:10px;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:5px;position:relative;color:#263044;width:100%}
+.t .card{background:#f4fbff;border-color:#d6ebf5}
+.emoji{font-size:clamp(1.8rem,3vw,2.7rem)}
+.name{font-size:clamp(.62rem,1vw,.82rem);font-weight:800;text-align:center}
+.hint{font-size:.62rem;color:#687080;text-align:center}
+.card.out{opacity:.45;background:#e6e6eb}
+.card.out:after{content:"✕";position:absolute;color:#d04454;font-size:3rem;font-weight:bold}
+.guesses{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.guesses label{font-weight:bold;font-size:.8rem;display:block;margin-bottom:5px}
+.guesses select{width:100%;padding:10px;border:2px solid #ddd4f5;border-radius:9px}
+.feedback{background:#f6f4fa;border-radius:10px;padding:12px;margin-top:10px;min-height:42px;font-weight:bold;line-height:1.4}
+.private{display:none;position:fixed;inset:0;background:#17102fee;z-index:5;align-items:center;justify-content:center;padding:16px}
+.private.show{display:flex}
+.secret{background:white;border-radius:18px;padding:22px;max-width:480px;width:100%;text-align:center}
+.pair{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.secretitem{background:#f2edff;border-radius:12px;padding:14px;min-width:130px}
+.secretitem .emoji{font-size:3rem}
+.note{color:#5d6370;line-height:1.4;font-size:.9rem}
+footer{text-align:center;color:#ded5f5;padding:12px;font-size:.75rem}
+@media(max-width:650px){body{padding:6px}.intro-grid,.boards,.guesses{grid-template-columns:1fr}.cards{gap:5px}.card{min-height:78px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="kicker">UN VIAJE SIN LÍMITES · MISIÓN DE INVESTIGACIÓN</div>
+  <h1>🚀 ¿QUIÉN VIAJÓ Y CÓMO? 🧳</h1>
+</header>
 <main class="panel">
 <section id="rulesScreen" class="screen active intro">
-<h2>📘 REGLAS DEL JUEGO</h2>
-<p style="text-align:center">¡DOS INVESTIGADORES, UN MISTERIO! Descubran quién viajó y cómo, haciendo preguntas y descartando opciones.</p>
-<div class="intro-grid">
-<div class="rule"><h3>🕵️ JUGADOR 1 · INVESTIGADOR</h3><ol><li>Observá los dos tableros.</li><li>Hacé una pregunta que se responda con SÍ o NO.</li><li>Escuchá la respuesta y tachá las opciones que descartás.</li><li>Cuando estés listo, elegí una persona y un transporte como respuesta final.</li></ol></div>
-<div class="rule blue"><h3>🤫 JUGADOR 2 · GUARDIÁN DEL MISTERIO</h3><ol><li>Tocá “Preparar misterio” y mirá en secreto las dos opciones.</li><li>Memorizalas y tocá “Ya lo memoricé”.</li><li>Respondé con la verdad: solo SÍ o NO.</li><li>No señales, no des pistas extra y no muestres el secreto.</li></ol></div>
-<div class="rule"><h3>💬 EJEMPLOS DE PREGUNTAS</h3>¿Trabaja en una escuela? · ¿Es una persona adulta? · ¿Viaja por el aire? · ¿Tiene ruedas? · ¿Puede llevar muchos pasajeros?</div>
-<div class="rule blue"><h3>🔄 ¿CÓMO TERMINA?</h3>El investigador comprueba su respuesta. Si acierta la persona y el transporte, ¡resuelve el misterio! Después intercambian roles y comienzan otra partida.</div>
-</div>
-<div class="startline"><button id="enterGame" class="primary">🚀 ¡IR AL JUEGO!</button></div>
+  <h2>📘 REGLAS DEL JUEGO</h2>
+  <p style="text-align:center">¡DOS INVESTIGADORES, UN MISTERIO! Descubran quién viajó y cómo, haciendo preguntas y descartando opciones.</p>
+  <div class="intro-grid">
+    <div class="rule"><h3>🕵️ JUGADOR 1 · INVESTIGADOR</h3><ol><li>Observá los dos tableros.</li><li>Hacé una pregunta que se responda con SÍ o NO.</li><li>Escuchá la respuesta y tachá las opciones que descartás.</li><li>Cuando estés listo, elegí una persona y un transporte como respuesta final.</li></ol></div>
+    <div class="rule blue"><h3>🤫 JUGADOR 2 · GUARDIÁN DEL MISTERIO</h3><ol><li>Tocá “Preparar misterio” y mirá en secreto las dos opciones.</li><li>Memorizalas y tocá “Ya lo memoricé”.</li><li>Respondé con la verdad: solo SÍ o NO.</li><li>No señales, no des pistas extra y no muestres el secreto.</li></ol></div>
+    <div class="rule"><h3>💬 EJEMPLOS DE PREGUNTAS</h3>¿Trabaja en una escuela? · ¿Es una persona adulta? · ¿Viaja por el aire? · ¿Tiene ruedas? · ¿Puede llevar muchos pasajeros?</div>
+    <div class="rule blue"><h3>🔄 ¿CÓMO TERMINA?</h3>El investigador comprueba su respuesta. Si acierta la persona y el transporte, ¡resuelve el misterio! Después intercambian roles y comienzan otra partida.</div>
+  </div>
+  <div class="startline"><button id="enterGame" class="primary" type="button">🚀 ¡IR AL JUEGO!</button></div>
 </section>
+
 <section id="gameScreen" class="screen">
-<div class="bar"><div id="status" class="status">Primero preparen el misterio en secreto.</div><button id="start" class="primary">🎲 Preparar misterio</button><button id="clear" class="soft">↻ Limpiar descartes</button><button id="backRules" class="dark">📘 Ver reglas</button></div>
-<div class="boards"><section class="board"><h2>🕵️ ¿QUIÉN ES? · 8 PERSONAS</h2><div class="cards" id="people"></div></section><section class="board t"><h2>🛸 ¿CÓMO VIAJA? · 8 TRANSPORTES</h2><div class="cards" id="transports"></div></section></div>
-<div class="guesses"><div><label for="gp">MI RESPUESTA: ¿QUIÉN VIAJÓ?</label><select id="gp"><option value="">Elegí una persona…</option></select></div><div><label for="gt">¿CÓMO VIAJÓ?</label><select id="gt"><option value="">Elegí un transporte…</option></select></div></div>
-<div class="bar" style="margin-top:10px"><button id="check" class="primary">🔎 Comprobar respuesta</button><button id="show" class="soft">🤫 Ver misterio secreto</button><button id="new" class="soft">✨ Nueva partida</button></div>
-<div class="feedback" id="feedback" aria-live="polite">Hacé preguntas oralmente. Quien conoce el misterio responde SÍ o NO.</div>
-</section></main><footer>🌟 PREGUNTAR · ESCUCHAR · DESCARTAR · DESCUBRIR 🌟</footer></div>
-<div class="private" id="private"><div class="secret"><h2>🤫 ¡MISTERIO SECRETO!</h2><p class="note">Solo debe mirar quien va a responder. El investigador tiene que mirar hacia otro lado.</p><div class="pair"><div class="secretitem"><div id="pe" class="emoji">🧑</div><b id="pn">PERSONA</b></div><div class="secretitem"><div id="te" class="emoji">🚗</div><b id="tn">TRANSPORTE</b></div></div><p class="note">Memorizá las dos opciones sin decirlas en voz alta.</p><button id="hide" class="primary">🙈 Ya lo memoricé</button></div></div>
+  <div class="bar">
+    <div id="status" class="status">Primero preparen el misterio en secreto.</div>
+    <button id="start" class="primary" type="button">🎲 Preparar misterio</button>
+    <button id="clear" class="soft" type="button">↻ Limpiar descartes</button>
+    <button id="backRules" class="dark" type="button">📘 Ver reglas</button>
+  </div>
+  <div class="boards">
+    <section class="board"><h2>🕵️ ¿QUIÉN ES? · 8 PERSONAS</h2><div class="cards" id="people"></div></section>
+    <section class="board t"><h2>🛸 ¿CÓMO VIAJA? · 8 TRANSPORTES</h2><div class="cards" id="transports"></div></section>
+  </div>
+  <div class="guesses">
+    <div><label for="gp">MI RESPUESTA: ¿QUIÉN VIAJÓ?</label><select id="gp"><option value="">Elegí una persona…</option></select></div>
+    <div><label for="gt">¿CÓMO VIAJÓ?</label><select id="gt"><option value="">Elegí un transporte…</option></select></div>
+  </div>
+  <div class="bar" style="margin-top:10px">
+    <button id="check" class="primary" type="button">🔎 Comprobar respuesta</button>
+    <button id="show" class="soft" type="button">🤫 Ver misterio secreto</button>
+    <button id="new" class="soft" type="button">✨ Nueva partida</button>
+  </div>
+  <div class="feedback" id="feedback" aria-live="polite">Hacé preguntas oralmente. Quien conoce el misterio responde SÍ o NO.</div>
+</section>
+</main>
+<footer>🌟 PREGUNTAR · ESCUCHAR · DESCARTAR · DESCUBRIR 🌟</footer>
+</div>
+
+<div class="private" id="private" role="dialog" aria-modal="true" aria-labelledby="secretTitle">
+  <div class="secret">
+    <h2 id="secretTitle">🤫 ¡MISTERIO SECRETO!</h2>
+    <p class="note">Solo debe mirar quien va a responder. El investigador tiene que mirar hacia otro lado.</p>
+    <div class="pair">
+      <div class="secretitem"><div id="pe" class="emoji">🧑</div><b id="pn">PERSONA</b></div>
+      <div class="secretitem"><div id="te" class="emoji">🚗</div><b id="tn">TRANSPORTE</b></div>
+    </div>
+    <p class="note">Memorizá las dos opciones sin decirlas en voz alta.</p>
+    <button id="hide" class="primary" type="button">🙈 Ya lo memoricé</button>
+  </div>
+</div>
+
 <script>
-const P=[["MARTINA","👩‍🏫","MAESTRA"],["BRUNO","👨‍✈️","PILOTO"],["CLARA","👩‍⚕️","MÉDICA"],["SIMÓN","🧑‍🎓","ESTUDIANTE"],["VERA","🧳","TURISTA"],["TOMÁS","🏃","DEPORTISTA"],["ALMA","🧭","AVENTURERA"],["DANTE","👴","ABUELO VIAJERO"]];
-const T=[["AVIÓN","✈️"],["COLECTIVO","🚌"],["TREN","🚆"],["BARCO","🚢"],["AUTO","🚗"],["BICICLETA","🚲"],["MOTO","🏍️"],["SUBTE","🚇"]];
-let sp=-1,st=-1,ready=false;const $=x=>document.getElementById(x);
-function card(k,i,e,n,h){return `<button class="card" type="button" data-k="${k}" data-i="${i}" aria-label="Descartar ${n}"><span class="emoji">${e}</span><span class="name">${n}</span><span class="hint">${h}</span></button>`}
-function draw(){$('people').innerHTML=P.map((p,i)=>card('p',i,p[1],p[0],p[2])).join('');$('transports').innerHTML=T.map((t,i)=>card('t',i,t[1],t[0],'TRANSPORTE')).join('');$('gp').innerHTML='<option value="">Elegí una persona…</option>'+P.map((p,i)=>`<option value="${i}">${p[0]} — ${p[2]}</option>`).join('');$('gt').innerHTML='<option value="">Elegí un transporte…</option>'+T.map((t,i)=>`<option value="${i}">${t[0]}</option>`).join('')}
-function clearMarks(){document.querySelectorAll('.card').forEach(c=>c.classList.remove('out'))}
-function start(){sp=Math.floor(Math.random()*P.length);st=Math.floor(Math.random()*T.length);ready=true;$('pe').textContent=P[sp][1];$('pn').textContent=P[sp][0]+' · '+P[sp][2];$('te').textContent=T[st][1];$('tn').textContent=T[st][0];$('private').classList.add('show');clearMarks();$('gp').value='';$('gt').value='';$('status').textContent='Misterio preparado: ¡que empiece la investigación!';$('feedback').textContent='Memorizá el misterio y después empezá a responder preguntas.'}
-$('enterGame').onclick=()=>{$('rulesScreen').classList.remove('active');$('gameScreen').classList.add('active')};
-$('backRules').onclick=()=>{$('gameScreen').classList.remove('active');$('rulesScreen').classList.add('active')};
-$('start').onclick=start;$('new').onclick=start;$('hide').onclick=()=>$('private').classList.remove('show');$('clear').onclick=()=>{clearMarks();$('feedback').textContent='Descartes limpiados. El misterio sigue siendo el mismo.'};
-document.addEventListener('click',e=>{let c=e.target.closest('.card');if(c)c.classList.toggle('out')});
-$('show').onclick=()=>{if(!ready){$('feedback').textContent='Primero prepará el misterio.';return}$('private').classList.add('show')};
-$('check').onclick=()=>{if(!ready){$('feedback').textContent='Primero tocá “Preparar misterio”.';return}let p=$('gp').value,t=$('gt').value;if(p===''||t===''){$('feedback').textContent='Elegí una persona y un transporte antes de comprobar.';return}if(+p===sp&&+t===st){$('feedback').textContent='🎉 ¡MISTERIO RESUELTO! Era '+P[sp][0]+' y viajó en '+T[st][0]+'. ¡Ahora cambien los roles!';$('status').textContent='¡LO DESCUBRISTE! Prepará una nueva partida para cambiar los roles.'}else{let m=[];if(+p!==sp)m.push('la persona no es correcta');if(+t!==st)m.push('el transporte no es correcto');$('feedback').textContent='🔍 Todavía no: '+m.join(' y ')+'. ¡Seguí preguntando y descartando!'}};
+"use strict";
+const P = [
+  ["MARTINA","👩‍🏫","MAESTRA"],
+  ["BRUNO","👨‍✈️","PILOTO"],
+  ["CLARA","👩‍⚕️","MÉDICA"],
+  ["SIMÓN","🧑‍🎓","ESTUDIANTE"],
+  ["VERA","🧳","TURISTA"],
+  ["TOMÁS","🏃","DEPORTISTA"],
+  ["ALMA","🧭","AVENTURERA"],
+  ["DANTE","👴","ABUELO VIAJERO"]
+];
+const T = [
+  ["AVIÓN","✈️"],["COLECTIVO","🚌"],["TREN","🚆"],["BARCO","🚢"],
+  ["AUTO","🚗"],["BICICLETA","🚲"],["MOTO","🏍️"],["SUBTE","🚇"]
+];
+let secretPerson = -1;
+let secretTransport = -1;
+let ready = false;
+const $ = id => document.getElementById(id);
+
+function makeCard(kind, index, emoji, name, hint) {
+  return `<button class="card" type="button" data-k="${kind}" data-i="${index}" aria-label="Descartar ${name}">
+    <span class="emoji">${emoji}</span><span class="name">${name}</span><span class="hint">${hint}</span>
+  </button>`;
+}
+function draw() {
+  $("people").innerHTML = P.map((person, i) => makeCard("p", i, person[1], person[0], person[2])).join("");
+  $("transports").innerHTML = T.map((transport, i) => makeCard("t", i, transport[1], transport[0], "TRANSPORTE")).join("");
+  $("gp").innerHTML = '<option value="">Elegí una persona…</option>' +
+    P.map((person, i) => `<option value="${i}">${person[0]} — ${person[2]}</option>`).join("");
+  $("gt").innerHTML = '<option value="">Elegí un transporte…</option>' +
+    T.map((transport, i) => `<option value="${i}">${transport[0]}</option>`).join("");
+}
+function clearMarks() {
+  document.querySelectorAll(".card").forEach(card => card.classList.remove("out"));
+}
+function startGame() {
+  secretPerson = Math.floor(Math.random() * P.length);
+  secretTransport = Math.floor(Math.random() * T.length);
+  ready = true;
+  $("pe").textContent = P[secretPerson][1];
+  $("pn").textContent = P[secretPerson][0] + " · " + P[secretPerson][2];
+  $("te").textContent = T[secretTransport][1];
+  $("tn").textContent = T[secretTransport][0];
+  $("private").classList.add("show");
+  clearMarks();
+  $("gp").value = "";
+  $("gt").value = "";
+  $("status").textContent = "Misterio preparado: ¡que empiece la investigación!";
+  $("feedback").textContent = "Memorizá el misterio y después empezá a responder preguntas.";
+}
+function hideSecret() {
+  $("private").classList.remove("show");
+}
+
+$("enterGame").addEventListener("click", () => {
+  $("rulesScreen").classList.remove("active");
+  $("gameScreen").classList.add("active");
+});
+$("backRules").addEventListener("click", () => {
+  $("gameScreen").classList.remove("active");
+  $("rulesScreen").classList.add("active");
+});
+$("start").addEventListener("click", startGame);
+$("new").addEventListener("click", startGame);
+$("hide").addEventListener("click", hideSecret);
+$("clear").addEventListener("click", () => {
+  clearMarks();
+  $("feedback").textContent = "Descartes limpiados. El misterio sigue siendo el mismo.";
+});
+document.addEventListener("click", event => {
+  const card = event.target.closest("button.card");
+  if (card) card.classList.toggle("out");
+});
+$("show").addEventListener("click", () => {
+  if (!ready) {
+    $("feedback").textContent = "Primero tocá “Preparar misterio”.";
+    return;
+  }
+  $("private").classList.add("show");
+});
+$("check").addEventListener("click", () => {
+  if (!ready) {
+    $("feedback").textContent = "Primero tocá “Preparar misterio”.";
+    return;
+  }
+  const person = $("gp").value;
+  const transport = $("gt").value;
+  if (person === "" || transport === "") {
+    $("feedback").textContent = "Elegí una persona y un transporte antes de comprobar.";
+    return;
+  }
+  if (Number(person) === secretPerson && Number(transport) === secretTransport) {
+    $("feedback").textContent = `🎉 ¡MISTERIO RESUELTO! Era ${P[secretPerson][0]} y viajó en ${T[secretTransport][0]}.\n¡Ahora cambien los roles!`;
+    $("status").textContent = "¡LO DESCUBRISTE! Prepará una nueva partida para cambiar los roles.";
+  } else {
+    const messages = [];
+    if (Number(person) !== secretPerson) messages.push("la persona no es correcta");
+    if (Number(transport) !== secretTransport) messages.push("el transporte no es correcto");
+    $("feedback").textContent = "🔍 Todavía no: " + messages.join(" y ") + ". ¡Seguí preguntando y descartando!";
+  }
+});
 draw();
-</script></body></html>
+</script>
+</body>
+</html>
